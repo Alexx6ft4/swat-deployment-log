@@ -1,0 +1,225 @@
+!DOCTYPE html
+html lang=en
+head
+  meta charset=UTF-8 
+  meta name=viewport content=width=device-width, initial-scale=1.0 
+  titleSWAT Deployment Reporttitle
+  style
+    body {
+      font-family Arial, sans-serif;
+      background-color #121212;
+      color #e0e0e0;
+      padding 20px;
+    }
+    .logo {
+      display flex;
+      justify-content center;
+      margin-bottom 20px;
+    }
+    .logo img {
+      width 200px;
+      height auto;
+    }
+    form {
+      background #1e1e1e;
+      padding 20px;
+      border-radius 8px;
+      box-shadow 0 0 10px rgba(255,255,255,0.1);
+      max-width 600px;
+      margin auto;
+    }
+    label {
+      display block;
+      margin-top 15px;
+      font-weight bold;
+      color #ffffff;
+    }
+    select, input, textarea {
+      width 100%;
+      padding 8px;
+      margin-top 5px;
+      border-radius 4px;
+      border 1px solid #444;
+      background-color #2a2a2a;
+      color #ffffff;
+    }
+    button {
+      margin-top 20px;
+      padding 10px 20px;
+      border none;
+      background-color #0d6efd;
+      color #ffffff;
+      font-size 16px;
+      border-radius 4px;
+      cursor pointer;
+    }
+    ul.selected-list {
+      list-style-type disc;
+      padding-left 20px;
+      margin-top 10px;
+    }
+  style
+head
+body
+  div class=logo
+    img src=httpsi.imgur.comrtrxOO6.png alt=LSPD SWAT Logo
+  div
+
+  form id=deploymentForm
+    labelType of Deploymentlabel
+    select id=type
+      option value=ActiveActiveoption
+      option value=PassivePassiveoption
+    select
+
+    labelName of Deployment Team Leaderlabel
+    input type=text id=leader required 
+
+    label for=officerSelectParticipating SWAT Officerslabel
+    select id=officerSelect onchange=addOfficer()
+      option value=-- Select Officer --option
+      option value=John DoeJohn Doeoption
+      option value=Jane SmithJane Smithoption
+      option value=Alex LeeAlex Leeoption
+      option value=Maria GarciaMaria Garciaoption
+    select
+    ul id=officerList class=selected-listul
+    input type=hidden name=officers id=officersInput
+
+    label for=lowProfileSelectLow Profile SWAT Officerslabel
+    select id=lowProfileSelect onchange=addLowProfileOfficer()
+      option value=-- Select Officer --option
+      option value=John DoeJohn Doeoption
+      option value=Jane SmithJane Smithoption
+      option value=Alex LeeAlex Leeoption
+      option value=Maria GarciaMaria Garciaoption
+    select
+    ul id=lowProfileList class=selected-listul
+    input type=hidden name=lowProfile id=lowProfileInput
+
+    labelSuspect(s) Involvedlabel
+    input type=text id=suspects required 
+
+    labelDeployment Summarylabel
+    textarea id=summary rows=4 requiredtextarea
+
+    labelEvidence (If Applicable)label
+    textarea id=evidence rows=4textarea
+
+    labelCopy of Warrantlabel
+    textarea id=warrant rows=4textarea
+
+    labelDeployment Outcomelabel
+    select id=outcome
+      option value=SuccessfulSuccessfuloption
+      option value=UnsuccessfulUnsuccessfuloption
+    select
+
+    button type=submitSubmitbutton
+  form
+
+  script
+    const officerSet = new Set();
+    const lowProfileSet = new Set();
+
+    function addOfficer() {
+      const select = document.getElementById('officerSelect');
+      const value = select.value;
+      if (!value  officerSet.has(value)) return;
+      officerSet.add(value);
+
+      const list = document.getElementById('officerList');
+      const li = document.createElement('li');
+      li.textContent = value;
+      list.appendChild(li);
+
+      document.getElementById('officersInput').value = Array.from(officerSet).join(',');
+    }
+
+    function addLowProfileOfficer() {
+      const select = document.getElementById('lowProfileSelect');
+      const value = select.value;
+      if (!value  lowProfileSet.has(value)) return;
+      lowProfileSet.add(value);
+
+      const list = document.getElementById('lowProfileList');
+      const li = document.createElement('li');
+      li.textContent = value;
+      list.appendChild(li);
+
+      document.getElementById('lowProfileInput').value = Array.from(lowProfileSet).join(',');
+    }
+
+    function formatImages(text) {
+      return text.replace((https[^s]+.(pngjpgjpeggif))gi, '[img]$1[img]');
+    }
+
+    document.getElementById('deploymentForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const type = document.getElementById('type').value;
+      const leader = document.getElementById('leader').value;
+      const officers = document.getElementById('officersInput').value.split(',').filter(o = o);
+      const lowProfile = document.getElementById('lowProfileInput').value.split(',').filter(o = o);
+      const suspects = document.getElementById('suspects').value;
+      const summary = document.getElementById('summary').value;
+      const evidence = formatImages(document.getElementById('evidence').value);
+      const warrant = formatImages(document.getElementById('warrant').value);
+      const outcome = document.getElementById('outcome').value;
+
+      const today = new Date();
+      const dateStr = `${String(today.getDate()).padStart(2, '0')}${today.toLocaleString('default', { month 'short' }).toUpperCase()}${today.getFullYear()}`;
+
+      const outcomeColor = outcome === Successful  green  red;
+
+      const bbcode = `[img]httpsi.imgur.comUNUgDzP.png[img]
+[divbox=white]
+[b]Date[b] ${dateStr}
+[b]Deployment Hours[b] 0h 0m
+[hr][hr]
+[b]Type of Deployment[b] ${type}
+
+[b]Name of Deployment Team Leader[b] [i]${leader}[i]
+
+[b]Participating SWAT Officers[b]
+[list=]
+${officers.map(o = `[]${o}`).join(n)}
+[list]
+
+[b]Low Profile SWAT Officers[b]
+[list=]
+${lowProfile.map(o = `[]${o}`).join(n)}
+[list]
+
+[b]Suspect(s) Involved[b]
+[list]
+[]${suspects}
+[list]
+
+[b]Deployment Summary[b]
+[list]
+[]${summary}
+[list]
+
+[b]Evidence (If Applicable)[b]
+[spoiler]
+[i]${evidence  'List Evidence andor place pictures of any evidence here.'}[i]
+[spoiler]
+
+[b]Copy of Warrant (If Applicable i.e. Search Warrant, Arrest Warrant)[b]
+[spoiler]
+[i]${warrant  'Post a copy of the warrant executed here.'}[i]
+[spoiler]
+
+[b]Deployment Outcome[b]  [highlight=${outcomeColor}][b]${outcome}[b][highlight]
+
+[divbox]
+[img]httpsi.imgur.com88vzzHs.jpg[img]`;
+
+      navigator.clipboard.writeText(bbcode).then(() = {
+        window.open('httpsgov.eclipse-rp.netposting.phpmode=post&f=113', '_blank');
+      });
+    });
+  script
+body
+html
