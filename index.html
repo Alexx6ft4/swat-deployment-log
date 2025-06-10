@@ -5,43 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SWAT Deployment Report</title>
   <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --container-bg: #1e1e1e;
+      --border-color: #444;
+      --input-bg: #2a2a2a;
+      --label-color: #ffffff;
+      --highlight-color: #0d6efd;
+    }
+    
+    .light-mode {
+      --bg-color: #f5f5f5;
+      --text-color: #333333;
+      --container-bg: #ffffff;
+      --border-color: #ddd;
+      --input-bg: #f9f9f9;
+      --label-color: #222222;
+      --highlight-color: #0a58ca;
+    }
+    
     body {
       font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
     }
     .logo {
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
+      position: relative;
     }
     .logo img {
       width: 200px;
       height: auto;
     }
+    .theme-toggle {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: var(--container-bg);
+      border-radius: 20px;
+      padding: 5px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid var(--border-color);
+    }
     form {
-      background: #1e1e1e;
+      background: var(--container-bg);
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       max-width: 600px;
       margin: auto;
+      transition: background-color 0.3s;
     }
     label {
       display: block;
       margin-top: 15px;
       font-weight: bold;
-      color: #ffffff;
+      color: var(--label-color);
+      transition: color 0.3s;
     }
     select, input, textarea {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
       border-radius: 4px;
-      border: 1px solid #444;
-      background-color: #2a2a2a;
-      color: #ffffff;
+      border: 1px solid var(--border-color);
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      transition: all 0.3s;
     }
     div.time-inputs {
       display: flex;
@@ -54,11 +92,12 @@
       margin-top: 20px;
       padding: 10px 20px;
       border: none;
-      background-color: #0d6efd;
+      background-color: var(--highlight-color);
       color: #ffffff;
       font-size: 16px;
       border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
     ul.selected-list {
       list-style-type: disc;
@@ -70,6 +109,10 @@
 <body>
   <div class="logo">
     <img src="https://i.imgur.com/rtrxOO6.png" alt="LSPD SWAT Logo">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span id="themeIcon">🌙</span>
+      <span id="themeText">Dark Mode</span>
+    </div>
   </div>
 
   <form id="deploymentForm">
@@ -205,6 +248,20 @@
 
     function formatImages(text) {
       return text.replace(/(https?:\/\/[^\s]+\.(?:png|jpg|jpeg|gif))/gi, '[img]$1[/img]');
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      const icon = document.getElementById('themeIcon');
+      const text = document.getElementById('themeText');
+      
+      if (document.body.classList.contains('light-mode')) {
+        icon.textContent = '🌞';
+        text.textContent = 'Light Mode';
+      } else {
+        icon.textContent = '🌙';
+        text.textContent = 'Dark Mode';
+      }
     }
 
     document.getElementById('deploymentForm').addEventListener('submit', function(event) {
