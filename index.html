@@ -110,6 +110,13 @@
       cursor: pointer;
       font-size: 0.8em;
     }
+    /* Make evidence and warrant fields thinner */
+    #evidence, #warrant {
+  height: 60px;
+  min-height: 10px;
+  max-height: 10px;
+  resize: none;
+}
   </style>
 </head>
 <body>
@@ -208,10 +215,10 @@
     <textarea id="summary" rows="4" required></textarea>
 
     <label>Evidence (If Applicable):</label>
-    <textarea id="evidence" rows="4"></textarea>
+    <textarea id="evidence" rows="2"></textarea>
 
     <label>Copy of Warrant:</label>
-    <textarea id="warrant" rows="4"></textarea>
+    <textarea id="warrant" rows="2"></textarea>
 
     <label>Deployment Outcome:</label>
     <select id="outcome">
@@ -274,7 +281,6 @@
       
       li.appendChild(deleteBtn);
       list.appendChild(li);
-
       document.getElementById('lowProfileInput').value = Array.from(lowProfileSet).join(',');
       select.value = '';
     }
