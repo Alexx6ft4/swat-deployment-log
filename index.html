@@ -29,6 +29,16 @@
       color: var(--text-color);
       padding: 20px;
       transition: background-color 0.3s, color 0.3s;
+      /* Background image styling */
+      background-image: linear-gradient(rgba(18,18,18,0.86), rgba(18,18,18,0.94)), url('https://i.imgur.com/H3CQ4Ro.jpeg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    .light-mode {
+      /* Overlay for light mode */
+      background-image: linear-gradient(rgba(245,245,245,0.92), rgba(245,245,245,0.97)), url('https://i.imgur.com/H3CQ4Ro.jpeg');
     }
     .logo {
       display: flex;
@@ -57,10 +67,18 @@
       background: var(--container-bg);
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37), 0 0 0 2000px rgba(0,0,0,0.12) inset;
       max-width: 600px;
       margin: auto;
       transition: background-color 0.3s;
+      backdrop-filter: blur(10px);
+      /* glass effect */
+      background: linear-gradient(120deg, rgba(30,30,30,0.90) 60%, rgba(45,45,45,0.60) 100%);
+    }
+    .light-mode form {
+      background: linear-gradient(120deg, rgba(255,255,255,0.85) 60%, rgba(245,245,245,0.75) 100%);
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.10), 0 0 0 2000px rgba(255,255,255,0.09) inset;
+      backdrop-filter: blur(12px);
     }
     label {
       display: block;
@@ -113,6 +131,13 @@
       min-height: 10px;
       max-height: 10px;
       resize: none;
+    }
+    /* Optional: Slight shadow/glow for the form to stand out more on the image */
+    @media (max-width: 700px) {
+      form {
+        padding: 10px;
+        max-width: 98vw;
+      }
     }
   </style>
 </head>
