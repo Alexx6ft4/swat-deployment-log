@@ -631,7 +631,7 @@
         const today = new Date();
         const dateStr = `${String(today.getDate()).padStart(2, '0')}/${today.toLocaleString('default', { month: 'short' }).toUpperCase()}/${today.getFullYear()}`;
         const outcomeColor = outcome === "Successful" ? "green" : "red";
-        const bbcode = `[img]https://i.imgur.com/UNUgDzP.png[/img]
+        const bbcode = `[img]https://i.ibb.co/Q36LLSbH/image.png[/img]
 [divbox=white]
 [b]Date:[/b] ${dateStr}
 [b]Deployment Hours:[/b] ${hours}h ${minutes}m
@@ -692,5 +692,6 @@ ${suspects.map(s => `[*]${s}`).join("\n")}
   </script>
 </body>
 </html>
+
 
 
